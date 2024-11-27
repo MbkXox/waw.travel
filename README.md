@@ -22,5 +22,5 @@ Pour cloner le projet et le démarrer localement, suivez ces étapes :
 ```bash
 git clone https://github.com/new-horizons/waw.git
 cd waw
-npm install
-npm start
+composer install
+symfony server:start -d
