@@ -1,0 +1,200 @@
+{% if is_edit %}
+    <div class="existing-photos mb-4">
+        <h4 class="text-md font-semibold mb-2">Images existantes</h4>
+        {% for media in medias %}
+            {% if media.isCover == 1 %}
+                <div class="media-item flex items-center space-x-2 mb-2">
+                    <img src="{{ asset('uploads/covers_road_trip/' ~ media.path) }}" alt="Photo" class="w-20 h-20 object-cover">
+                </div>
+            {% else %}
+                <div class="media-item flex items-center space-x-2 mb-2">
+                    <img src="{{ asset('uploads/photos_road_trip/' ~ media.path) }}" alt="Photo" class="w-20 h-20 object-cover">
+                    <form method="post" action="{{ path('app_photo_road_trip_delete', {'id': media.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ media.id) }}">
+                        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Supprimer</button>
+                    </form>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% if is_edit %}
+    <div class="existing-photos mb-4">
+        <h4 class="text-md font-semibold mb-2">Checkpoints existantes</h4>
+        {% for checkpoint in checkpoints %}
+            {% if checkpoint %}
+                <div class="media-item flex items-center space-x-2 mb-2">
+                    <p>{{ checkpoint.title }}</p>
+                    <form method="post" action="{{ path('app_checkpoint_road_trip_delete', {'id': checkpoint.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ checkpoint.id) }}">
+                        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Supprimer</button>
+                    </form>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endif %}
+
+
+{{ form_start(form, {'attr': {'class': 'shadow-md rounded'}}) }}
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="col-span-1 md:col-span-2">
+            {{ form_row(form.title, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-[--white] leading-tight focus:outline-none focus:shadow-outline'}}) }}
+        </div>
+        <div class="col-span-1 md:col-span-2">
+            {{ form_row(form.coverImage, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-[--white] leading-tight focus:outline-none focus:shadow-outline'}}) }}
+        </div>
+        <div class="col-span-1 md:col-span-2">
+            {{ form_row(form.body, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-[--white] leading-tight focus:outline-none focus:shadow-outline', 'rows': '4'}}) }}
+        </div>
+        <div>
+            {{ form_row(form.status, {'attr': {'class':''}}) }}
+        </div>
+        <div>
+            {{ form_row(form.likes, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-[--white] leading-tight focus:outline-none focus:shadow-outline'}}) }}
+        </div>
+        <div>
+            {{ form_row(form.utilisateur, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-[--white] leading-tight focus:outline-none focus:shadow-outline'}}) }}
+        </div>
+        <div>
+            {{ form_row(form.type, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-[--white] leading-tight focus:outline-none focus:shadow-outline'}}) }}
+        </div>
+
+        <div class="col-span-1 md:col-span-2">
+            <h3 class="text-lg font-semibold mb-2">Photos</h3>
+            <div id="media-collection" data-prototype="{{ form_widget(form.medias.vars.prototype)|e('html_attr') }}" data-index="{{ form.medias|length }}" class="space-y-2">
+                {% for mediaForm in form.medias %}
+                    {% if mediaForm.vars.value.id is not defined %}
+                        <div class="media-item flex items-center space-x-2">
+                            {{ form_row(mediaForm.path) }}
+                            <button type="button" class="btn-remove-media bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Supprimer</button>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <button type="button" id="add-media" class="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                Ajouter un média
+            </button>
+        </div>
+
+        <div class="col-span-1 md:col-span-2">
+            <h3 class="text-lg font-semibold mb-2">Checkpoints</h3>
+            <div id="checkpoint-collection" data-prototype="{{ form_widget(form.checkPoints.vars.prototype)|e('html_attr') }}" data-index="{{ form.checkPoints|length }}" class="space-y-4">
+                {% for checkpoint in form.checkPoints %}
+                    <div class="checkpoint-item bg-gray-100 p-4 rounded">
+                        {{ form_row(checkpoint.title, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-[--white] leading-tight focus:outline-none focus:shadow-outline'}}) }}
+                        {{ form_row(checkpoint.latitude, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-[--white] leading-tight focus:outline-none focus:shadow-outline'}}) }}
+                        {{ form_row(checkpoint.longitude, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-[--white] leading-tight focus:outline-none focus:shadow-outline'}}) }}
+                        {{ form_row(checkpoint.date_start, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-[--white] leading-tight focus:outline-none focus:shadow-outline'}}) }}
+                        {{ form_row(checkpoint.date_end, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-[--white] leading-tight focus:outline-none focus:shadow-outline'}}) }}
+                        {% if is_edit == false %}
+                            <button type="button" class="btn-remove-checkpoint mt-2 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Supprimer</button>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+            <button type="button" id="add-checkpoint" class="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                Ajouter un checkpoint
+            </button>
+        </div>
+        
+        <div class="col-span-1 md:col-span-2">
+            <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                Enregistrer
+            </button>
+        </div>
+    </div>
+{{ form_end(form) }}
+
+
+
+<script>
+(function() {
+    function initializeMediaCollection() {
+        var addButton = document.getElementById('add-media');
+        var mediaCollection = document.getElementById('media-collection');
+
+        if (!addButton || !mediaCollection) return;
+
+        addButton.removeEventListener('click', addMediaItem);
+        addButton.addEventListener('click', addMediaItem);
+
+        mediaCollection.removeEventListener('click', removeMediaItem);
+        mediaCollection.addEventListener('click', removeMediaItem);
+
+        function addMediaItem() {
+            var prototype = mediaCollection.dataset.prototype;
+            var index = mediaCollection.dataset.index;
+            var newForm = prototype.replace(/__name__/g, index);
+            mediaCollection.dataset.index = parseInt(index) + 1;
+
+            var newFormElement = document.createElement('div');
+            newFormElement.className = 'media-item';
+            newFormElement.innerHTML = newForm;
+            
+            var removeButton = document.createElement('button');
+            removeButton.type = 'button';
+            removeButton.innerText = 'Supprimer';
+            removeButton.className = 'btn-remove-media';
+            newFormElement.appendChild(removeButton);
+
+            mediaCollection.appendChild(newFormElement);
+        }
+
+        function removeMediaItem(e) {
+            if (e.target && e.target.className === 'btn-remove-media') {
+                e.target.closest('.media-item').remove();
+            }
+        }
+    }
+
+    // Exécuter immédiatement la fonction d'initialisation
+    initializeMediaCollection();
+
+})();
+
+(function() {
+    function initializeCheckPointCollection() {
+        var addButton = document.getElementById('add-checkpoint');
+        var mediaCollection = document.getElementById('checkpoint-collection');
+
+        if (!addButton || !mediaCollection) return;
+
+        addButton.removeEventListener('click', addMediaItem);
+        addButton.addEventListener('click', addMediaItem);
+
+        mediaCollection.removeEventListener('click', removeMediaItem);
+        mediaCollection.addEventListener('click', removeMediaItem);
+
+        function addMediaItem() {
+            var prototype = mediaCollection.dataset.prototype;
+            var index = mediaCollection.dataset.index;
+            var newForm = prototype.replace(/__name__/g, index);
+            mediaCollection.dataset.index = parseInt(index) + 1;
+
+            var newFormElement = document.createElement('div');
+            newFormElement.className = 'checkpoint-item';
+            newFormElement.innerHTML = newForm;
+            
+            var removeButton = document.createElement('button');
+            removeButton.type = 'button';
+            removeButton.innerText = 'Supprimer';
+            removeButton.className = 'btn-remove-checkpoint';
+            newFormElement.appendChild(removeButton);
+
+            mediaCollection.appendChild(newFormElement);
+        }
+
+        function removeMediaItem(e) {
+            if (e.target && e.target.className === 'btn-remove-checkpoint') {
+                e.target.closest('.checkpoint-item').remove();
+            }
+        }
+    }
+
+    // Exécuter immédiatement la fonction d'initialisation
+    initializeCheckPointCollection();
+
+})();
+</script>

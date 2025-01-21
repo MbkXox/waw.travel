@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}RoadTrip index{% endblock %}
+
+{% block body %}
+
+    <h1>RoadTrip index</h1>
+
+    <a class="p-8" href="{{ path('app_road_trip_new') }}" >Ajouter un roadTrip</a>
+
+    {{ include('road_trip/_content_index.html.twig') }}
+
+{% endblock %}

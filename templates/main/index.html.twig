@@ -1,0 +1,106 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="py-16">
+    <div class="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between">
+        <!-- Texte de gauche -->
+        <div class="md:w-1/2">
+            <h1 class="text-3xl font-bold mb-4">Bienvenue sur WOW votre plateforme de roadtrips ultime</h1>
+            <p class="text-l text-gray-300">
+                Imaginez-vous au volant, les fenêtres ouvertes, le vent dans les cheveux, et la route s'étendant à
+                l'infini devant vous. Chez nous, nous croyons que les roadtrips sont plus que juste des voyages – ce
+                sont des aventures qui créent des souvenirs.
+            </p>
+        </div>
+
+        <!-- Images de droite -->
+        <div class="md:w-1/2 flex justify-center mt-8 md:mt-0 space-x-4">
+            <div class="h-64 w-32 bg-cover bg-center rounded-lg shadow-lg" style="background-image: url('{{ asset('/images/photo-4.png') }}');"></div>
+            <div class="h-64 w-32 bg-cover bg-center rounded-lg shadow-lg scale-110" style="background-image: url('{{ asset('/images/photo-2.png') }}');"></div>
+            <div class="h-64 w-32 bg-cover bg-center rounded-lg shadow-lg" style="background-image: url('{{ asset('/images/photo-3.png') }}');"></div>
+        </div>
+    </div>
+</div>
+<div class="min-h-scree p-6">
+<h1 class="text-2xl font-bold text-white mb-8 border-b border-[--white] w-1/4 p-4">Road Trips Publics</h1>    
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    {% for trip in roadtrips %}
+        <a href="{{ path('app_road_trip_show', {'id': trip.id}) }}">
+            <div class="relative group overflow-hidden rounded-lg bg-gray-900">
+                {# Image Container #}
+                <div class="w-full h-64">
+                    {% if trip.coverRoadTrip %}
+                        <img
+                            src="{{ asset('/uploads/covers_road_trip/' ~ trip.coverRoadTrip.path) }}"
+                            alt="landscape"
+                            class="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
+                        />
+                    {% else %}
+                        <img
+                            src="{{ asset('/uploads/placeholder.png') }}"
+                            alt=""
+                            class="object-cover w-full h-full transition-transform duration-300 group-hover:scale-110"
+                        />
+                    {% endif %}
+                </div>
+                
+                {# Overlay gradient #}
+                <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/70"></div>
+                
+                {# Content #}
+                <div class="flex flex-col absolute bottom-0 left-0 right-0 p-4 space-y-2">
+                    {# Location #}
+                    <div class="flex items-center space-x-1">
+                        <svg class="w-4 h-4 text-[--tiffany-blue]" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+                        </svg>
+                        <span class="text-white font-medium">{{ trip.startCheckPoint.country }}</span>
+                    </div>
+
+                    {# Dates and Duration #}
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center space-x-1">
+                            <svg class="w-4 h-4 text-[--tiffany-blue]" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
+                            </svg>
+                            <span class="text-white text-xs">{{ trip.startCheckPoint.dateStart|date('d/m/Y') }} — {{ trip.endCheckPoint.dateEnd|date('d/m/Y') }}</span>
+                        </div>
+                        <div class="flex gap-1 items-center text-[--tiffany-blue] text-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="transparent" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                            </svg>
+                            <p class="text-sm">10 jours</p>
+                        </div>
+                    </div>
+                    
+                        {# Author #}
+                        <div class="flex items-center space-x-2 rounded-full bg-[--black] w-fit">
+                            <div class="flex items-center justify-center gap-1 px-2 py-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/>
+                                </svg>
+                                <p class="text-xs text-[--white]">{{ trip.utilisateur.firstName }} {{ trip.utilisateur.lastName }}</p>
+                            </div>
+                        </div>
+                        
+                        {# Creation Date #}
+                        <div class="mt-2 self-end">
+                            <span class="text-xs text-gray-300">créer le {{ trip.createdAt|date('d/m/Y') }}</span>
+                        </div>
+                </div>
+                
+                {# Action Buttons #}
+                <div class="absolute top-2 right-2 flex space-x-2">
+                    <button class="p-1.5 rounded-full bg-black/50 text-white hover:bg-black/70 transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                        </svg>
+                        <p class="text-xs">{{ trip.likes }}</p>
+                    </button>
+                </div>
+            </div>
+        </a>
+    {% endfor %}
+    </div>
+</div>
+{% endblock %}

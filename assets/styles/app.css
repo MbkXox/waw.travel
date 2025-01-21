@@ -1,3 +1,122 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root {
+    --white: #F3F3F3;
+    --black: #1E1E1E;
+    --tiffany-blue: #75DBCD;
+    --tea-green: #C9DBBA;
+    --vanilla: #DCDBA8;
+    --light-orange: #F5CDA7;
+    --atomic-tangerine: #F5A7A7;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Tilt+Neon&display=swap');
+
+@font-face {
+    font-family: 'GeistMono';
+    src: url('./fonts/GEISTMONO-BLACK.OTF') format('opentype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'GeistMono';
+    src: url('./fonts/GEISTMONO-BOLD.OTF') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'GeistMono';
+    src: url('./fonts/GEISTMONO-LIGHT.OTF') format('opentype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'GeistMono';
+    src: url('./fonts/GEISTMONO-MEDIUM.OTF') format('opentype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'GeistMono';
+    src: url('./fonts/GEISTMONO-REGULAR.OTF') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'GeistMono';
+    src: url('./fonts/GEISTMONO-SEMIBOLD.OTF') format('opentype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'GeistMono';
+    src: url('./fonts/GEISTMONO-THIN.OTF') format('opentype');
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'GeistMono';
+    src: url('./fonts/GEISTMONO-ULTRABLACK.OTF') format('opentype');
+    font-weight: 950;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'GeistMono';
+    src: url('./fonts/GEISTMONO-ULTRALIGHT.OTF') format('opentype');
+    font-weight: 200;
+    font-style: normal;
+}
+
+html {
+  background-color: #1E1E1E;
+}
+
+
 body {
-    background-color: skyblue;
+    color: var(--white);
+    font-family: 'GeistMono', monospace;
+    margin-bottom: 1.5rem;
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+    margin-top: 0;
+
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--white);
+    font-family: 'Poppins', sans-serif;
+}
+
+p {
+  color: #F3F3F3;
+}
+
+input {
+    background-color: var(--black);
+    color: var(--white);
+}
+
+select {
+    background-color: var(--black);
+    color: var(--white);
+}
+
+textarea {
+    background-color: var(--black);
+    color: var(--white);
+}
+
+::-webkit-calendar-picker-indicator {
+    filter: invert(1);
 }

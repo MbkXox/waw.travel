@@ -1,0 +1,107 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ road_trip.title }}{% endblock %}
+
+{% block body %}
+<div class="min-h-scree p-8">
+    {# Header Section #}
+    <div class="max-w-7xl mx-auto">
+        <div class="flex justify-between items-center mb-8">
+            <h1 class="px-4 py-2 text-3xl rounded-lg font-bold text-[--white] border border-[--white]">{{ road_trip.title }}</h1>
+            <div class="flex space-x-4">
+                <a href="{{ path('app_home') }}" class="px-4 py-2 rounded-lg border border-[--white] text-[--white] hover:bg-[--atomic-tangerine] transition-colors">
+                    Retour
+                </a>
+                {# <a href="{{ path('app_road_trip_edit', {'id': road_trip.id}) }}" class="px-4 py-2 rounded-lg bg-teal-600 text-white hover:bg-teal-500 transition-colors">
+                    Modifier
+                </a> #}
+            </div>
+        </div>
+
+        {# Main Content Grid #}
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {# Left Column - Main Info #}
+            <div class="lg:col-span-2 space-y-6">
+                {# Cover Image #}
+                <div class="rounded-xl overflow-hidden aspect-w-16 aspect-h-9">
+                    {% for media in medias %}
+                        {% if media.isCover %}
+                            <img src="{{ asset('uploads/covers_road_trip/' ~ media.path) }}" 
+                                 alt="{{ media.name }}" 
+                                 class="w-full h-full object-cover">
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+                {# Road Trip Info #}
+                <div class="border border-[--white] rounded-xl p-6 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-400">Status</span>
+                        <span class="px-3 py-1 rounded-full {{ road_trip.status ? 'bg-[--atomic-tangerine]' : 'bg-[--tiffany-blue]' }} text-white text-sm">
+                            {{ road_trip.status ? 'Privé' : 'Public' }}
+                        </span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-400">Likes</span>
+                        <div class="flex items-center space-x-2">
+                            <svg class="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
+                            </svg>
+                            <span class="text-white">{{ road_trip.likes }}</span>
+                        </div>
+                    </div>
+                    <div class="pt-4 border-t border-gray-700">
+                        <p class="text-gray-300">{{ road_trip.body }}</p>
+                    </div>
+                </div>
+
+                {# Checkpoints Timeline #}
+                <div class="border border-[--white] rounded-xl p-6">
+                    <h2 class="text-xl font-semibold text-white mb-6">Étapes du voyage</h2>
+                    <div class="space-y-6 relative">
+                        {% for checkpoint in checkpoints %}
+                            {% if not loop.last %}
+                                <div class="absolute left-3 top-3 bottom-0 w-px bg-teal-500/30" style="z-index: -1"></div>
+                            {% endif %}
+                            <div class=" pb-6 last:pb-0 ">
+                                <div class="flex items-center gap-4 w-fit">
+                                    <div class=" left-0 top-1.5 w-6 h-6 rounded-full bg-[--tiffany-blue] flex items-center justify-center">
+                                        <span class="text-xs text-white font-bold">{{ loop.index }}</span>
+                                    </div>
+                                    <div class="border-b border-[--white] flex-1 py-2 ">
+                                        <h3 class="text-lg font-medium text-white">{{ checkpoint.title }}</h3>
+                                        <div class="m-0 flex items-center space-x-4 text-sm text-gray-400 ">
+                                            <span>{{ checkpoint.dateStart|date('d/m/Y') }} — {{ checkpoint.dateEnd|date('d/m/Y') }}</span>
+                                            <span class="flex items-center">
+                                                <svg class="w-4 h-4 mr-1 text-teal-400" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+                                                </svg>
+                                                {{ checkpoint.country }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            {# Right Column - Gallery #}
+            <div class=" rounded-xl p-6 border border-[--white]">
+                <div class="grid grid-cols-2 gap-4">
+                    {% for media in medias %}
+                        {% if not media.isCover %}
+                            <div class="rounded-lg overflow-hidden">
+                                <img src="{{ asset('uploads/photos_road_trip/' ~ media.path) }}" 
+                                     alt="{{ media.name }}"
+                                     class="w-full h-28 object-cover hover:scale-105 transition-transform duration-300">
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
