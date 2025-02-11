@@ -36,7 +36,7 @@ class RoadTrip
     private ?bool $status = null;
 
     #[ORM\Column]
-    private ?int $likes = null;
+    private ?int $likes = 0;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;

@@ -6,6 +6,7 @@
 parameters:
     photo_road_trip : '%kernel.project_dir%/public/uploads/photos_road_trip'
     cover_road_trip : '%kernel.project_dir%/public/uploads/covers_road_trip'
+    photo_user : '%kernel.project_dir%/public/uploads/photos_user'
 
 
 

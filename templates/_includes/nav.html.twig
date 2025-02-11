@@ -12,12 +12,11 @@
             <nav class="flex items-center space-x-8">
                 <a href="{{ path('app_home') }}" class="text-lg font-semibold hover:text-gray-400">Accueil</a>
                 <a href="{{ path('app_road_trip_index') }}" class="text-lg font-semibold hover:text-gray-400">RoadTrips</a>
-                <a href="#" class="text-lg font-semibold hover:text-gray-400">À-propos</a>
-                <a href="#" class="text-lg font-semibold hover:text-gray-400">Contact</a>
+                <a href="{{ path('app_profil') }}" class="text-lg font-semibold hover:text-gray-400">Profil</a>
             </nav>
 
             <!-- Button -->
-            <a href="#" class="bg-[--tiffany-blue] text-[--white] text-lg font-semibold py-2 px-4 rounded hover:bg-[--tea-green]">
+            <a href="{{ path('app_mes_road_trip_index') }}" class="bg-[--tiffany-blue] text-[--white] text-lg font-semibold py-2 px-4 rounded hover:bg-[--tea-green]">
                 Mes RoadTrips
             </a>
         </div>

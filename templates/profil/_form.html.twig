@@ -1,0 +1,55 @@
+{{ include('_flashes.html.twig') }}
+
+{{ form_start(form, {'attr': {'class': 'shadow-md rounded'}}) }}
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="col-span-1 md:col-span-2">
+            <p >Prenom</p>
+            {{ form_row(form.first_name, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-[--white] leading-tight focus:outline-none focus:shadow-outline'}}) }}
+        </div>
+        <div class="col-span-1 md:col-span-2">
+            <p >Nom</p>
+            {{ form_row(form.last_name, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-[--white] leading-tight focus:outline-none focus:shadow-outline'}}) }}
+        </div>
+        <div class="col-span-1 md:col-span-2">
+            <p >Email</p>
+            {{ form_row(form.email, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-[--white] leading-tight focus:outline-none focus:shadow-outline'}}) }}
+        </div>
+        <div class="col-span-1 md:col-span-2">
+            <p >Photo de profil</p>
+            <label for="profil_photo">
+                <img id="cover-image-preview" src="{{ asset('uploads/photos_user/' ~ user.photo) }}" alt="Photo" class="w-40 h-40 object-cover rounded-lg hover:opacity-75 cursor-pointer">
+            </label>
+            {{ form_row(form.photo, {'attr': {'class': 'hidden', 'id': 'road_trip_coverImage'}}) }}
+        </div>
+        <div class="col-span-1 md:col-span-2 mb-6">
+            <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                Enregistrer
+            </button>
+        </div>
+    </div>
+{{ form_end(form) }}
+
+<script>
+    document.addEventListener('turbo:load', function() {
+        const coverImageInput = document.getElementById('road_trip_coverImage');
+        const coverImagePreview = document.getElementById('cover-image-preview');
+
+        if (coverImageInput) {
+            coverImageInput.addEventListener('change', function(event) {
+                const file = event.target.files[0];
+
+                if (file) {
+                    const reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        coverImagePreview.src = e.target.result;
+                    }
+
+                    reader.readAsDataURL(file);
+                } else {
+                    coverImagePreview.src = "https://placehold.co/400"; // Remet l'image par défaut si aucun fichier n'est sélectionné
+                }
+            });
+        }
+    });
+</script>

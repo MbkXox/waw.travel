@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit RoadTrip{% endblock %}
+
+{% block body %}
+<div class="min-h-scree p-8">
+    <div class="max-w-7xl mx-auto">
+        <div class="flex justify-between items-center mb-8">
+            <h1 class="px-4 py-2 text-3xl rounded-lg font-bold text-[--white] border border-[--white]">{{ user.firstName }} {{ user.lastName }}</h1>
+            <div class="flex space-x-4">
+                <a href="{{ path('app_profil') }}" class="px-4 py-2 rounded-lg border border-[--white] text-[--white] hover:bg-[--atomic-tangerine] transition-colors">
+                    Retour
+                </a>
+            </div>
+        </div>
+        {{ include('profil/_form.html.twig')}}
+    </div>
+</div>
+{% endblock %}

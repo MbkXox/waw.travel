@@ -39,6 +39,10 @@ class MainController extends AbstractController
                 $roadtrip->startCheckPoint = $startCheckPoint;
                 $roadtrip->endCheckPoint = $endCheckPoint;
                 $roadtrip->coverRoadTrip = $coverRoadTrip;
+
+                // Calcul du nombre de jours
+                $interval = $startCheckPoint->getDateStart()->diff($endCheckPoint->getDateEnd());
+                $roadtrip->numberOfDays = $interval->days + 1; // +1 pour inclure le jour de début
             }
         }
 

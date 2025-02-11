@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter RoadTrip{% endblock %}
+
+{% block body %}
+<div class="min-h-scree p-8">
+    <div class="max-w-7xl mx-auto">
+        <div class="flex justify-between items-center mb-8">
+            <div class="flex space-x-4">
+                <a href="{{ path('app_mes_road_trip_index') }}" class="px-4 py-2 rounded-lg border border-[--white] text-[--white] hover:bg-[--atomic-tangerine] transition-colors">
+                    Retour
+                </a>
+            </div>
+        </div>
+        {{ include('mes_road_trips/_form.html.twig')}}
+    </div>
+</div>
+{% endblock %}

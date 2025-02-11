@@ -12,10 +12,7 @@
         {% endblock %}
     </head>
     <body>
-	    {{ include('_includes/nav.html.twig') }}
         {% block body %}
-            {% include '_flashes.html.twig' %}
-            {{ block('content') }}
         {% endblock %}
     </body>
 </html>

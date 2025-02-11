@@ -1,6 +1,6 @@
-<div class="flex flex-col gap-8 p-6">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
     {% for trip in roadtrips %}
-        <a href="{{ path('app_road_trip_show', {'id': trip.id}) }}">
+        <a href="{{ path('app_mes_road_trip_show', {'id': trip.id}) }}">
             <div class="relative group overflow-hidden rounded-lg bg-gray-900">
                 {# Image Container #}
                 <div class="w-full h-64">

@@ -1,19 +1,131 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_back_office.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Inscription{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+<div class="min-h-screen flex items-center justify-center sm:px-6 lg:px-8">
+    <div class="max-w-md w-full space-y-8">
+        {# Header #}
+        <div>
+            <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
+                Créez votre compte
+            </h2>
+        </div>
 
-    {{ form_errors(registrationForm) }}
+        {# Form Errors #}
+        {% if form_errors(registrationForm) %}
+            <div class="rounded-md bg-red-50 dark:bg-red-900/50 p-4">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <div class="text-sm text-red-800 dark:text-red-200">
+                            {{ form_errors(registrationForm) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
+        {# Registration Form #}
+        {{ form_start(registrationForm, {
+            'attr': {
+                'class': 'mt-8 space-y-6'
+            }
         }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+            <div class="space-y-6 rounded-md shadow-sm">
+                {# Email Field #}
+                <div>
+                    {{ form_label(registrationForm.email, 'Email', {
+                        'label_attr': {
+                            'class': 'block text-sm font-medium text-gray-700 dark:text-gray-300'
+                        }
+                    }) }}
+                    <div class="mt-1">
+                        {{ form_widget(registrationForm.email, {
+                            'attr': {
+                                'class': 'appearance-none block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white sm:text-sm',
+                                'placeholder': 'votre@email.com'
+                            }
+                        }) }}
+                    </div>
+                    {{ form_errors(registrationForm.email, {
+                        'attr': {
+                            'class': 'mt-2 text-sm text-red-600 dark:text-red-400'
+                        }
+                    }) }}
+                </div>
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+                {# Password Field #}
+                <div>
+                    {{ form_label(registrationForm.plainPassword, 'Mot de passe', {
+                        'label_attr': {
+                            'class': 'block text-sm font-medium text-gray-700 dark:text-gray-300'
+                        }
+                    }) }}
+                    <div class="mt-1">
+                        {{ form_widget(registrationForm.plainPassword, {
+                            'attr': {
+                                'class': 'appearance-none block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white sm:text-sm'
+                            }
+                        }) }}
+                    </div>
+                    {{ form_errors(registrationForm.plainPassword, {
+                        'attr': {
+                            'class': 'mt-2 text-sm text-red-600 dark:text-red-400'
+                        }
+                    }) }}
+                </div>
+
+                {# Terms Checkbox #}
+                <div class="flex items-center">
+                    {{ form_widget(registrationForm.agreeTerms, {
+                        'attr': {
+                            'class': 'h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 dark:border-gray-600 rounded'
+                        }
+                    }) }}
+                    {{ form_label(registrationForm.agreeTerms, "J'accepte les conditions d'utilisation", {
+                        'label_attr': {
+                            'class': 'ml-2 block text-sm text-gray-700 dark:text-gray-300'
+                        }
+                    }) }}
+                </div>
+                {{ form_errors(registrationForm.agreeTerms, {
+                    'attr': {
+                        'class': 'mt-2 text-sm text-red-600 dark:text-red-400'
+                    }
+                }) }}
+            </div>
+
+            <div class="mt-6">
+                <button type="submit" 
+                        class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200">
+                    <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+                        <svg class="h-5 w-5 text-blue-500 group-hover:text-blue-400" 
+                             xmlns="http://www.w3.org/2000/svg" 
+                             viewBox="0 0 20 20" 
+                             fill="currentColor">
+                            <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6z" />
+                            <path d="M16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z" />
+                        </svg>
+                    </span>
+                    S'inscrire
+                </button>
+            </div>
+        {{ form_end(registrationForm) }}
+
+        {# Login Link #}
+        <div class="text-center mt-4">
+            <p class="text-sm text-gray-600 dark:text-gray-400">
+                Déjà inscrit ?
+                <a href="{{ path('app_login') }}" class="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300">
+                    Connectez-vous
+                </a>
+            </p>
+        </div>
+    </div>
+</div>
 {% endblock %}

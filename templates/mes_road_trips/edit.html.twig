@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit RoadTrip{% endblock %}
+
+{% block body %}
+<div class="min-h-scree p-8">
+    <div class="max-w-7xl mx-auto">
+        <div class="flex justify-between items-center mb-8">
+            <h1 class="px-4 py-2 text-3xl rounded-lg font-bold text-[--white] border border-[--white]">{{ road_trip.title }}</h1>
+            <div class="flex space-x-4">
+                <a href="{{ path('app_mes_road_trip_show', {'id' : road_trip.id}) }}" class="px-4 py-2 rounded-lg border border-[--white] text-[--white] hover:bg-[--atomic-tangerine] transition-colors">
+                    Retour
+                </a>
+                <form method="post" action="{{ path('app_mes_road_trip_delete', {'id': road_trip.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ road_trip.id) }}">
+                    <button class="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-500 transition-colors">Supprimer</button>
+                </form>
+            </div>
+        </div>
+        {{ include('mes_road_trips/_form.html.twig')}}
+    </div>
+</div>
+{% endblock %}
