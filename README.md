@@ -24,3 +24,4 @@ git clone https://github.com/new-horizons/waw.git
 cd waw
 composer install
 symfony server:start -d
+symfony console doctrine:fixtures:load

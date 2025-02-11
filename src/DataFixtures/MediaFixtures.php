@@ -16,6 +16,16 @@ class MediaFixtures extends Fixture implements DependentFixtureInterface
         $faker = Factory::create('fr_FR');
         $roadTrips = $manager->getRepository(RoadTrip::class)->findAll();
 
+        foreach ($roadTrips as $roadTrip) {
+            $media = new Media();
+            $media->setRoadTrip($roadTrip);
+            $media->setIsCover(true);
+            $media->setName($faker->word);
+            $media->setPath('https://placehold.co/400');
+
+            $manager->persist($media);
+        }
+
         for ($i = 0; $i < 50; $i++) {
             $media = new Media();
             $media->setRoadTrip($faker->randomElement($roadTrips));
