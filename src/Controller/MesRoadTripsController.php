@@ -22,11 +22,8 @@ class MesRoadTripsController extends AbstractController
     public function index(EntityManagerInterface $em, Security $security): Response
     {
 
-        if ($security->getUser()) {
-            $roadtrips = $em->getRepository(RoadTrip::class)->findBy(['utilisateur' => $security->getUser()->getId()]);
-        } else {
-            return $this->redirectToRoute('app_login');
-        }
+
+        $roadtrips = $em->getRepository(RoadTrip::class)->findBy(['utilisateur' => $security->getUser()->getId()]);
         
         foreach ($roadtrips as $roadtrip) {
             $checkPoints = $roadtrip->getCheckPoints();
@@ -66,12 +63,8 @@ class MesRoadTripsController extends AbstractController
     #[Route('/new', name: 'app_mes_road_trip_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, FileUploadService $fileUploadService, FindCountryByCoordinates $findCountryByCoordinates, Security $security): Response
     {
-        
-        if ($security->getUser()) {
-            $user = $security->getUser();
-        } else {
-            return $this->redirectToRoute('app_login');
-        }
+
+        $user = $security->getUser();
 
         $roadTrip = new RoadTrip();
         $form = $this->createForm(RoadTripType::class, $roadTrip);
