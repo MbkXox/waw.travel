@@ -23,5 +23,8 @@ Pour cloner le projet et le démarrer localement, suivez ces étapes :
 git clone https://github.com/new-horizons/waw.git
 cd waw
 composer install
+symfony console d:d:d --force 
+symfony console d:d:c 
+symfony console d:s:u --force
 symfony server:start -d
 symfony console doctrine:fixtures:load
