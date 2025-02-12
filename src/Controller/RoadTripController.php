@@ -16,7 +16,7 @@ class RoadTripController extends AbstractController
     public function index(EntityManagerInterface $em): Response
     {
 
-        $roadtrips = $em->getRepository(RoadTrip::class)->findBy(['status' => 0]);
+        $roadtrips = $em->getRepository(RoadTrip::class)->findBy(['status' => 0], ['created_at' => 'DESC']);
 
         foreach ($roadtrips as $roadtrip) {
             $checkPoints = $roadtrip->getCheckPoints();

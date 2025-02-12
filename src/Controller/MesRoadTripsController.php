@@ -22,8 +22,7 @@ class MesRoadTripsController extends AbstractController
     public function index(EntityManagerInterface $em, Security $security): Response
     {
 
-
-        $roadtrips = $em->getRepository(RoadTrip::class)->findBy(['utilisateur' => $security->getUser()->getId()]);
+        $roadtrips = $em->getRepository(RoadTrip::class)->findBy(['utilisateur' => $security->getUser()->getId()], ['created_at' => 'DESC']);
         
         foreach ($roadtrips as $roadtrip) {
             $checkPoints = $roadtrip->getCheckPoints();

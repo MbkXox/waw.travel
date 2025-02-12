@@ -17,9 +17,15 @@
         <div class="col-span-1 md:col-span-2">
             <p >Photo de profil</p>
             <label for="profil_photo">
-                <img id="cover-image-preview" src="{{ asset('uploads/photos_user/' ~ user.photo) }}" alt="Photo" class="w-40 h-40 object-cover rounded-lg hover:opacity-75 cursor-pointer">
+                <img id="cover-image-preview" src="
+                    {% if user.photo %}
+                        {{ asset('uploads/photos_user/' ~ user.photo) }}
+                    {% else %}
+                        https://placehold.co/400
+                    {% endif %}
+                " alt="Photo" class="w-40 h-40 object-cover rounded-lg hover:opacity-75 cursor-pointer">
             </label>
-            {{ form_row(form.photo, {'attr': {'class': 'hidden', 'id': 'road_trip_coverImage'}}) }}
+            {{ form_row(form.photo, {'attr': {'class': 'hidden', 'id': 'profil_photo'}}) }}
         </div>
         <div class="col-span-1 md:col-span-2 mb-6">
             <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
@@ -30,26 +36,32 @@
 {{ form_end(form) }}
 
 <script>
-    document.addEventListener('turbo:load', function() {
-        const coverImageInput = document.getElementById('road_trip_coverImage');
-        const coverImagePreview = document.getElementById('cover-image-preview');
+    function setupImagePreview() {
+        const photoInput = document.getElementById('profil_photo');
+        const photoPreview = document.getElementById('cover-image-preview');
 
-        if (coverImageInput) {
-            coverImageInput.addEventListener('change', function(event) {
+        if (photoInput && photoPreview) {
+            photoInput.addEventListener('change', function(event) {
                 const file = event.target.files[0];
 
                 if (file) {
                     const reader = new FileReader();
 
                     reader.onload = function(e) {
-                        coverImagePreview.src = e.target.result;
+                        photoPreview.src = e.target.result;
                     }
 
                     reader.readAsDataURL(file);
                 } else {
-                    coverImagePreview.src = "https://placehold.co/400"; // Remet l'image par défaut si aucun fichier n'est sélectionné
+                    photoPreview.src = "https://placehold.co/400";
                 }
             });
         }
-    });
+    }
+
+    // Exécuter la fonction au chargement initial
+    setupImagePreview();
+
+    // Si vous utilisez Turbo, ajoutez également cet écouteur d'événements
+    document.addEventListener('turbo:load', setupImagePreview);
 </script>
