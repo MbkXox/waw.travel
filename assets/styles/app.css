@@ -116,7 +116,3 @@ textarea {
     background-color: var(--black);
     color: var(--white);
 }
-
-::-webkit-calendar-picker-indicator {
-    filter: invert(1);
-}
