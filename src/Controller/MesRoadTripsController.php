@@ -138,7 +138,7 @@ class MesRoadTripsController extends AbstractController
             $entityManager->persist($roadTrip);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_mes_road_trip_index', [], Response::HTTP_SEE_OTHER);        
+            return $this->redirectToRoute('app_mes_road_trip_show', ['id' => $roadTrip->getId()], Response::HTTP_SEE_OTHER);        
         }
                         
         return $this->render('mes_road_trips/new.html.twig', [
@@ -239,7 +239,7 @@ class MesRoadTripsController extends AbstractController
             $entityManager->persist($roadTrip);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_mes_road_trip_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_mes_road_trip_show', ['id' => $roadTrip->getId()], Response::HTTP_SEE_OTHER);        
         }
 
         return $this->render('mes_road_trips/edit.html.twig', [

@@ -5,6 +5,13 @@
 {% block body %}
 <div class="min-h-screen flex items-center justify-center sm:px-6 lg:px-8">
     <div class="max-w-md w-full space-y-8">
+
+        <div class="flex items-center justify-center space-x-2">
+            <a href="{{ path('app_home') }}">
+                <img src="{{ asset('/images/logo.png') }}" alt="Logo" class="h-24">
+            </a>
+        </div>
+
         {# Header #}
         <div>
             <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
@@ -53,6 +60,50 @@
                         }) }}
                     </div>
                     {{ form_errors(registrationForm.email, {
+                        'attr': {
+                            'class': 'mt-2 text-sm text-red-600 dark:text-red-400'
+                        }
+                    }) }}
+                </div>
+
+                {# Prenom Field #}
+                <div>
+                    {{ form_label(registrationForm.first_name, 'Prenom', {
+                        'label_attr': {
+                            'class': 'block text-sm font-medium text-gray-700 dark:text-gray-300'
+                        }
+                    }) }}
+                    <div class="mt-1">
+                        {{ form_widget(registrationForm.first_name, {
+                            'attr': {
+                                'class': 'appearance-none block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white sm:text-sm',
+                                'placeholder': 'prenom'
+                            }
+                        }) }}
+                    </div>
+                    {{ form_errors(registrationForm.first_name, {
+                        'attr': {
+                            'class': 'mt-2 text-sm text-red-600 dark:text-red-400'
+                        }
+                    }) }}
+                </div>
+
+                {# Nom Field #}
+                <div>
+                    {{ form_label(registrationForm.last_name, 'Nom', {
+                        'label_attr': {
+                            'class': 'block text-sm font-medium text-gray-700 dark:text-gray-300'
+                        }
+                    }) }}
+                    <div class="mt-1">
+                        {{ form_widget(registrationForm.last_name, {
+                            'attr': {
+                                'class': 'appearance-none block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white sm:text-sm',
+                                'placeholder': 'nom'
+                            }
+                        }) }}
+                    </div>
+                    {{ form_errors(registrationForm.last_name, {
                         'attr': {
                             'class': 'mt-2 text-sm text-red-600 dark:text-red-400'
                         }
